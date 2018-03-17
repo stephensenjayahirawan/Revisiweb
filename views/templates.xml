@@ -1,0 +1,67 @@
+
+<odoo>
+	<data>
+<!-- 	<template id="ciptalab_style" name="Ciptalab Website Style" inherit_id="webiste.theme">
+		<xpath expr="//link[last()]" postition="after">
+			<link rel="stylesheet" href="/ciptalab/static/src/css/website.css" type="text/css"  />
+		</xpath>		
+	</template> -->
+	<template id="index">
+
+		<div class="container">
+
+		<t t-call="website.layout">
+			<div id="wrap" class="wrap_bg">
+			<t t-foreach="classes" t-as="cl">
+				<div class="col-xs-12 col-md-4">
+					<div class="panel panel-primary">
+						<div class="panel-heading"><t t-esc="cl.name" /></div>
+							<div class="panel-body">
+								<div class="col-md-4">
+									<b>Course</b>
+								</div>
+								<div class="col-md-8">
+									<t t-esc="cl.course_id.name" />
+								</div>
+								<div class="col-md-4">
+									<b>Trainer</b>
+								</div>
+								<div class="col-md-8">
+									<t t-esc="cl.trainer_id.name" />
+								</div>
+								<div class="col-md-4">
+									<b>Open Date</b>
+								</div>
+								<div class="col-md-8">
+									<t t-esc="cl.open_date" />
+								</div>
+								<div class="col-md-4">
+									<b>Start Date</b>
+								</div>
+								<div class="col-md-8">
+									<t t-esc="cl.start_date" />
+								</div>
+								<div class="col-md-12">
+									<b>Description</b>
+								</div>
+								<div class="col-md-12" style="heigth: 100px">
+									<t t-esc="cl.course_id.course_desc" />
+								</div>
+								<div class="col-md-12" >
+									<center>
+										<a t-attf-href="/classes/register/{{cl.id}}" t-attf-class="btn btn-success btn-sm active" t-attf-role="button">Register</a>
+									</center>
+								</div>
+							</div>
+						
+					</div>
+				</div>
+			</t>
+		</div>
+		</t>
+			
+		</div>
+	</template>
+
+	</data>
+</odoo>

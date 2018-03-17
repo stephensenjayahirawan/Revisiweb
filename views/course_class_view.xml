@@ -1,0 +1,211 @@
+<odoo>
+	<data>
+
+<!-- CLASS ========================================================================================================== -->
+
+		<record id="training_center_class_form" model="ir.ui.view">
+			<field name="name">training.center.class.form</field>
+			<field name="model">training.center.class</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+				 		<field name="state" readonly="1" widget="statusbar" />
+						<button string="Open Class" type="object" name="open_class" class="oe_highlight" attrs="{'invisible': [('state','!=','draft')]}" confirm="Are you sure to open this class?" />
+						<button string="Start Class" type="object" name="start_class" class="oe_highlight" attrs="{'invisible': [('state','!=','open')]}" confirm="Are you sure to start this class?" />
+					</header>
+					<group>
+						<group>
+							<field name="name" />
+							<field name="course_id" />
+							<field name="trainer_id" />
+							<field name="capacity" />
+						</group>
+						<group>
+							<!-- <field name="open_date" attrs="{'readonly':[('state','=','open')]}" /> -->
+							<field name="open_date"/>
+							<field name="start_date" />
+							<field name="finish_date" />
+							<field name="total_participant" />
+						</group>
+					</group>
+					<notebook>
+						<page string="Sessions">
+							<group>
+								<field name="session_ids" nolabel="1">
+									<tree editable="bottom" create="false" delete="false">
+										<field name="sequence" invisible="1" />
+										<field name="name" />
+										<field name="desc" />
+										<field name="duration" />
+										<field name="session_start" />
+										<field name="session_end" />
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Participants">
+							<group>
+								<field name="participant_ids" readonly="1" nolabel="1">
+									<tree editable="bottom" create="false">
+										<field name="participant_id" />
+										<!-- <field name="name" /> -->
+									</tree>
+								</field>
+							</group>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="training_center_class_tree" model="ir.ui.view">
+			<field name="name">training.center.class.tree</field>
+			<field name="model">training.center.class</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name" />
+					<field name="course_id" />
+					<field name="trainer_id" />
+					<field name="open_date" />
+					<field name="start_date" />
+					<field name="finish_date" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="training_center_action_class" model="ir.actions.act_window">
+			<field name="name">Course Classes</field>
+			<field name="res_model">training.center.class</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="training_center_menu_class" sequence="1" parent="training_center_class_root" action="training_center_action_class" />
+
+<!-- PARTICIPANTS ========================================================================================================== -->
+		
+		<record id="training_center_participant_form" model="ir.ui.view">
+			<field name="name">training.center.participant.form</field>
+			<field name="model">training.center.participant</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="par_id" />
+							<field name="name" />
+							<field name="birth_date" />
+						</group>
+						<group>
+							<field name="address" />
+							<field name="phone" />
+							<field name="email" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record id="training_center_participant_tree" model="ir.ui.view">
+			<field name="name">training.center.participant.tree</field>
+			<field name="model">training.center.participant</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="par_id" />
+					<field name="name" />
+					<field name="address" />
+					<field name="phone" />
+					<field name="email" />
+					<field name="birth_date" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="training_center_participant_search_view">
+			<field name="name">training.center.participant.search</field>
+			<field name="model">training.center.participant</field>
+			<field name="arch" type="xml">
+				<search>
+					<!-- Polish Notation -->
+					<field name="email" string="Name or email" filter_domain="['|',('name','ilike',self),'|',('email','ilike',self),('par_id','ilike',self)]" />
+				</search>
+			</field>
+		</record>
+		
+		<record id="training_center_action_participant" model="ir.actions.act_window">
+			<field name="name">Participants</field>
+			<field name="res_model">training.center.participant</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="training_center_menu_participant" sequence="3" parent="training_center_menu_config" action="training_center_action_participant" />
+
+<!-- CLASS PARTICIPANTS ==================================================================================================== -->
+		
+		<record id="training_center_class_participant_form" model="ir.ui.view">
+			<field name="name">training.center.class.participant.form</field>
+			<field name="model">training.center.class.participant</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="class_id" />
+						<field name="participant_id" />
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record id="training_center_class_participant_tree" model="ir.ui.view">
+			<field name="name">training.center.class.participant.tree</field>
+			<field name="model">training.center.class.participant</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="class_id" />
+					<field name="participant_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="training_center_action_class_participant" model="ir.actions.act_window">
+			<field name="name">Class Participant</field>
+			<field name="res_model">training.center.class.participant</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="training_center_menu_class_participant" sequence="3" parent="training_center_class_root" action="training_center_action_class_participant" />
+
+<!-- PARTICIPANTS ABSENCE ================================================================================================== -->
+
+		<record id="training_center_class_session_form" model="ir.ui.view">
+			<field name="name">training.center.class.session.form</field>
+			<field name="model">training.center.class.session</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="sequence" />
+							<field name="name" />
+							<field name="desc" />
+						</group>
+						<group>
+							<field name="duration" />
+							<field name="session_start" />
+							<field name="session_end" />
+						</group>
+					</group>
+					<group string="Participant Absence">
+						<field name="class_participant_absent_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="class_participant_id" />
+								<field name="attendance" />
+							</tree>
+						</field>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+	</data>
+ </odoo>

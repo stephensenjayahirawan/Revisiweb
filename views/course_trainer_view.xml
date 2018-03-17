@@ -1,0 +1,132 @@
+<odoo>
+	<data>
+
+	<menuitem id="training_center_menu_root" name="Training Center" sequence="20" />
+	<menuitem id="training_center_class_root" name="Class Management" sequence="1" parent="training_center_menu_root" />
+	<menuitem id="training_center_menu_config" name="Configuration" sequence="4" parent="training_center_menu_root" />
+
+
+<!-- COURSE ================================================================================================================ -->
+
+		<record id="training_center_course_form" model="ir.ui.view">
+			<field name="name">training.center.course.form</field>
+			<field name="model">training.center.course</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="name" />
+						<field name="code" />
+						<field name="course_desc" />
+					</group>
+					<notebook>
+						<page string="Syllabus">
+							<group>
+								<field name="syllabus_ids" nolabel="1">
+									<tree editable="bottom">
+										<field name="sequence" />
+										<field name="name" />
+										<field name="duration" widget="float_time" />
+										<field name="desc" />
+									</tree>
+								</field>
+							</group>
+						</page>
+						<page string="Trainers">
+							<group>
+								<field name="trainer_ids" nolabel="1" readonly="1">
+									<tree editable="bottom">
+										<field name="trainer_id" />
+										<field name="level" />
+									</tree>
+								</field>
+							</group>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="training_center_course_tree" model="ir.ui.view">
+			<field name="name">training.center.course.tree</field>
+			<field name="model">training.center.course</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="code" />
+					<field name="name" />
+					<field name="course_desc" />
+					<field name="syllabus_ids" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="training_center_action_course" model="ir.actions.act_window">
+			<field name="name">Courses</field>
+			<field name="res_model">training.center.course</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="training_center_menu_course" sequence="1" parent="training_center_menu_config" action="training_center_action_course" />
+
+<!-- TRAINER =============================================================================================================== -->
+
+		<record id="training_center_trainer_form" model="ir.ui.view">
+			<field name="name">training.center.trainer.form</field>
+			<field name="model">training.center.trainer</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="id_number" />
+							<field name="name" />
+							<field name="gender" class="oe_inline" />
+							<field name="age" readonly="1"/>
+							<field name="birth_date" class="oe_inline" />
+						</group>
+						<group>
+							<field name="address" />
+							<field name="phone" />
+							<field name="email" />
+						</group>
+					</group>
+					<group string="Capabilities">
+						<field name="capability_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="course_id" />
+								<field name="level" />
+							</tree>
+						</field>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="training_center_trainer_tree" model="ir.ui.view">
+			<field name="name">training.center.trainer.tree</field>
+			<field name="model">training.center.trainer</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="id_number" />
+					<field name="name" />
+					<field name="gender" />
+					<field name="age" />
+					<field name="birth_date" />
+					<field name="address" />
+					<field name="email" />
+					<field name="phone" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="training_center_action_trainer" model="ir.actions.act_window">
+			<field name="name">Trainers</field>
+			<field name="res_model">training.center.trainer</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem id="training_center_menu_trainer" sequence="2" parent="training_center_menu_config" action="training_center_action_trainer" />
+
+
+	</data>
+</odoo>
